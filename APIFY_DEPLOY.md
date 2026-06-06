@@ -40,6 +40,18 @@ cd /root/ACTIVE_PROJECTS/refinery/refinery-rust
 apify actors push --force
 ```
 
+## Console input / README without Docker rebuild
+
+When `apify push` fails on Apify’s image build but you only changed `INPUT_SCHEMA.json` or `README.md`:
+
+```bash
+python3 scripts/sync_console_source.py   # INPUT_SCHEMA + Restore example input
+python3 scripts/sync_store_readme.py
+python3 scripts/qa_production.py         # live API QA
+```
+
+Hard-refresh Console → **Try actor** or **Information** tab.
+
 Source of truth: this repo path. Not `ARCHIVE/`, not personal Apify, not a second actor name.
 
 ## Version tags (avoid “three latest” in Console)

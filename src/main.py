@@ -32,8 +32,8 @@ async def main():
         raw_payload = input_data.get('raw_payload', '')
         urls = input_data.get('urls', [])
         
-        # If URLs provided, fetch HTML
-        if urls and not raw_payload:
+        # URL mode when urls are set (Console prefills both url + sample HTML — urls win)
+        if urls:
             Actor.log.info(f'Fetching {len(urls)} URLs')
             html_contents = []
             for url in urls:
@@ -48,7 +48,21 @@ async def main():
         else:
             html = raw_payload
         
-        if not html:
+        if not html or not str(html).strip():
+            if urls:
+                msg = (
+                    'All URL fetches failed (site may block Apify IPs, e.g. Cloudflare). '
+                    'Paste HTML from your browser or use an open URL like https://example.com'
+                )
+                Actor.log.error(msg)
+                await Actor.push_data({
+                    'success': False,
+                    'error': msg,
+                    'text': '',
+                    'word_count': 0,
+                    'content_type': 'web',
+                })
+                return
             Actor.log.error('No HTML provided in input')
             raise ValueError('No HTML provided in input')
         

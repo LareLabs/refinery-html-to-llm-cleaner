@@ -1,8 +1,10 @@
 # Deploy ZIP only — keep small. Git builds use .dockerignore + this where applicable.
 .git
 **/.git
+**/.git/**
 target
 target/**
+**/target/**
 refinery-deploy
 refinery-deploy/**
 

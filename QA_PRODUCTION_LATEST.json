@@ -1,0 +1,38 @@
+[
+  {
+    "name": "url-example",
+    "ok": true,
+    "status": "SUCCEEDED",
+    "run_id": "RsxxGImG6gqGVZ181",
+    "word_count": 18,
+    "text_len": 139,
+    "text_preview": "Example DomainExample DomainThis domain is for use in documentation examples without needing permission. Avoid use in operations.Learn more"
+  },
+  {
+    "name": "paste-minimal",
+    "ok": true,
+    "status": "SUCCEEDED",
+    "run_id": "gjwls1AbqA4PF1Rwd",
+    "word_count": 2,
+    "text_len": 19,
+    "text_preview": "QAProduction smoke."
+  },
+  {
+    "name": "paste-lipstick",
+    "ok": true,
+    "status": "SUCCEEDED",
+    "run_id": "2pzDt4D8QfIb6fXAm",
+    "word_count": 208,
+    "text_len": 1214,
+    "text_preview": "u\" =\"menu\" =\"true\" =\"navigation\"> Menu Log in Register Navigation Install the app Install More options Contact us Close Menu Home JavaScript is disabled. For a "
+  },
+  {
+    "name": "url-lipstick-live",
+    "ok": true,
+    "status": "FAILED",
+    "run_id": "xaHKpwei23ym6iZOc",
+    "word_count": null,
+    "text_len": 0,
+    "text_preview": ""
+  }
+]
