@@ -38,8 +38,12 @@ apify info   # confirm again
 
 ```bash
 cd /root/ACTIVE_PROJECTS/refinery/refinery-rust
-apify actors push --force
+bash scripts/deploy_actor.sh
 ```
+
+**Why not `apify push` from repo root or GitHub auto-build?** Apify’s git-clone path for this repo still hits a broken build cache on some workers. `deploy_actor.sh` stages a lean zip (runtime files only) and pushes reliably to worker `00310`.
+
+GitHub webhook is **disabled** — use `deploy_actor.sh` after merging to `main`.
 
 ## Console input / README without Docker rebuild
 
