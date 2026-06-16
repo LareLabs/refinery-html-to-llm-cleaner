@@ -73,7 +73,7 @@ Do **not** create `1.2` unless you mean to. After a mistaken `1.2` push, clear i
 - `1.1` → `buildTag: latest` (and point global `latest` at the last green **1.1.x** build)
 - `1.0` / `1.2` → `buildTag: null`
 
-**Current (fixed):** global `latest` = build **1.1.48+**; only version **1.1** shows `(latest)`.
+**Current (fixed):** global `latest` = build **1.1.16+** on actor `E5JQI6n1Xle0Mn0G6`; deploy via `scripts/deploy_actor.sh`.
 
 ## Store README (Console + public listing)
 
@@ -111,6 +111,8 @@ python3 scripts/sync_store_readme.py
 
 ## GitHub
 
-Version **1.1** is wired to `https://github.com/LareLabs/refinery-html-to-llm-cleaner` (`main`). Use **Build** in Console for code; use **`sync_store_readme.py`** when only the Store README changed.
+Repo: `https://github.com/LareLabs/refinery-html-to-llm-cleaner` (`main`).
 
-Do **not** rely on `apify push` until CLI Docker builds stop failing with Apify “unexpected system error” — and never use `*.md` in `.apifyignore` (see above).
+- **Deploy code:** `bash scripts/deploy_actor.sh` (not git webhook — auto-build disabled; git-clone path still fails on Apify).
+- **README / Console only:** `sync_store_readme.py`, `sync_console_source.py`.
+- Post-mortem: `/root/TOOLS/postmortems/2026-06-16-refinery-apify-build-worker-migration.md`
