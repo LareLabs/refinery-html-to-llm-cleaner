@@ -29,8 +29,9 @@ apify info   # confirm again
 | Field | Value |
 |-------|--------|
 | Store URL | https://apify.com/larelabs/refinery-html-to-llm-cleaner |
-| Actor ID | `jOcx8jK2FdhZhoKrE` |
-| Console | https://console.apify.com/organization/vTZ0XDFG4cZCNAdQl/actors/jOcx8jK2FdhZhoKrE |
+| Actor ID | `E5JQI6n1Xle0Mn0G6` |
+| Console | https://console.apify.com/organization/vTZ0XDFG4cZCNAdQl/actors/E5JQI6n1Xle0Mn0G6 |
+| Archived (broken worker) | `jOcx8jK2FdhZhoKrE` → renamed `refinery-html-to-llm-cleaner-archived-00307` |
 | Namespace | `larelabs/` (not `cameronlares/`) |
 
 ## Deploy from this directory only

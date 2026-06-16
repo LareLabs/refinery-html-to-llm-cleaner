@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
-ACTOR_ID = "jOcx8jK2FdhZhoKrE"
+ACTOR_ID = "E5JQI6n1Xle0Mn0G6"
 VERSION = "1.1"
 AUTH_PATH = Path("/root/.apify/auth.json")
 

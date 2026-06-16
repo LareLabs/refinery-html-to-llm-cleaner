@@ -10,7 +10,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ACTOR_ID = "jOcx8jK2FdhZhoKrE"
+ACTOR_ID = "E5JQI6n1Xle0Mn0G6"
 TOKEN = json.loads(Path("/root/.apify/auth.json").read_text())["token"]
 LIPSTICK_HTML = (ROOT / "assets" / "prefill-lipstickalley-wayback.html").read_text(encoding="utf-8")
 

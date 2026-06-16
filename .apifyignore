@@ -24,9 +24,12 @@ embed_images.py
 
 assets
 assets/**
+scripts
+scripts/**
 dashboard.html
 vercel.json
 quick_test.html
+test_local.html
 requirements.production.txt
 
 # Never blanket-ignore *.md — README.md must ship for Store listing (Apify ignores ! negation reliably)
