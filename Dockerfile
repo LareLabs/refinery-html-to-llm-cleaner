@@ -1,28 +1,11 @@
-# Use Apify's Python base image
-FROM apify/actor-python:3.12
+# Apify Python actor — pinned base image from last green build (1.1.65)
+FROM apify/actor-python:3.12@sha256:7817f0ae3217f6d4f7fc8ce2463240481e3f0b0a313f10793bafbcf5d88398f5
 
-# Set working directory
-WORKDIR /app
-
-# Copy requirements and install Python dependencies
-COPY requirements.txt ./
+COPY --chown=myuser:myuser requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy Python application and refinery core
-COPY app/ ./app/
-COPY src/ ./src/
-# Force cache bust for refinery_core_src by using build arg
-ARG REFINERY_VERSION=1.1.63-qa-deploy
-RUN echo "Refinery version: $REFINERY_VERSION"
-COPY refinery_core_src/ ./refinery_core_src/
-RUN echo "Refinery core version: $(cat refinery_core_src/.version 2>/dev/null || echo 'unknown')"
+COPY --chown=myuser:myuser app/ ./app/
+COPY --chown=myuser:myuser src/ ./src/
+COPY --chown=myuser:myuser refinery_core_src/ ./refinery_core_src/
 
-# Expose port
-EXPOSE 8000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
-
-# Run the Apify Actor
 CMD ["python", "src/main.py"]
