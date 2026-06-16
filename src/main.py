@@ -76,9 +76,11 @@ async def main():
         start_time = time.time()
         
         try:
-            # Import refinery core
+            # Import refinery core (path relative to project root, not /app)
             import sys
-            sys.path.append('/app/refinery_core_src')
+            from pathlib import Path
+            core_dir = Path(__file__).resolve().parent.parent / "refinery_core_src"
+            sys.path.insert(0, str(core_dir))
             import refinery_core
             
             # Process HTML with Refinery

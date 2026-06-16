@@ -1,36 +1,36 @@
 [
   {
     "name": "url-example",
-    "ok": false,
-    "status": "FAILED",
-    "run_id": "CodlYAvBvQNCsLiZo",
-    "word_count": null,
-    "text_len": 0,
-    "text_preview": ""
+    "ok": true,
+    "status": "SUCCEEDED",
+    "run_id": "5jhA4FbJAkQdtcExf",
+    "word_count": 18,
+    "text_len": 139,
+    "text_preview": "Example DomainExample DomainThis domain is for use in documentation examples without needing permission. Avoid use in operations.Learn more"
   },
   {
     "name": "paste-minimal",
-    "ok": false,
-    "status": "FAILED",
-    "run_id": "oUzpIvQQr1iPE36wJ",
-    "word_count": null,
-    "text_len": 0,
-    "text_preview": ""
+    "ok": true,
+    "status": "SUCCEEDED",
+    "run_id": "mNloS5z7uNBKRyOYD",
+    "word_count": 2,
+    "text_len": 19,
+    "text_preview": "QAProduction smoke."
   },
   {
     "name": "paste-lipstick",
-    "ok": false,
-    "status": "FAILED",
-    "run_id": "l82Z98FW4Bit3LFJ3",
-    "word_count": null,
-    "text_len": 0,
-    "text_preview": ""
+    "ok": true,
+    "status": "SUCCEEDED",
+    "run_id": "gaEYZLIhFSFGYZeNs",
+    "word_count": 208,
+    "text_len": 1214,
+    "text_preview": "u\" =\"menu\" =\"true\" =\"navigation\"> Menu Log in Register Navigation Install the app Install More options Contact us Close Menu Home JavaScript is disabled. For a "
   },
   {
     "name": "url-lipstick-live",
     "ok": true,
     "status": "SUCCEEDED",
-    "run_id": "zxxYqGXPP9YT79A7F",
+    "run_id": "LDfZgXlcePv7hDxY9",
     "word_count": 0,
     "text_len": 0,
     "text_preview": ""
