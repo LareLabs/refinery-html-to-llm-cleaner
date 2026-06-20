@@ -54,17 +54,20 @@ async def main():
                     'All URL fetches failed (site may block Apify IPs, e.g. Cloudflare). '
                     'Paste HTML from your browser or use an open URL like https://example.com'
                 )
-                Actor.log.error(msg)
-                await Actor.push_data({
-                    'success': False,
-                    'error': msg,
-                    'text': '',
-                    'word_count': 0,
-                    'content_type': 'web',
-                })
-                return
-            Actor.log.error('No HTML provided in input')
-            raise ValueError('No HTML provided in input')
+            else:
+                msg = (
+                    'No HTML provided in input. '
+                    'Set either raw_payload or urls (for example https://example.com).'
+                )
+            Actor.log.warning(msg)
+            await Actor.push_data({
+                'success': False,
+                'error': msg,
+                'text': '',
+                'word_count': 0,
+                'content_type': 'web',
+            })
+            return
         
         # Validate payload size (10MB limit)
         if len(html) > 10 * 1024 * 1024:

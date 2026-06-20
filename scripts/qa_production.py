@@ -76,6 +76,8 @@ def evaluate(name: str, payload: dict, expect_cf: bool = False) -> dict:
         ok = (status == "SUCCEEDED" and row.get("success") is False) or status == "FAILED"
     elif name == "url-example":
         ok = ok and "example" in text.lower()
+    elif name == "empty-input":
+        ok = status == "SUCCEEDED" and row.get("success") is False and "No HTML provided" in (row.get("error") or "")
     return {
         "name": name,
         "ok": ok,
@@ -89,6 +91,7 @@ def evaluate(name: str, payload: dict, expect_cf: bool = False) -> dict:
 
 def main() -> int:
     cases = [
+        ("empty-input", {}, False),
         ("url-example", {
             "urls": ["https://example.com"],
             "removeScripts": True,
