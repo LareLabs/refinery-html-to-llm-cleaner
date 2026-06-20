@@ -73,7 +73,17 @@ Do **not** create `1.2` unless you mean to. After a mistaken `1.2` push, clear i
 - `1.1` → `buildTag: latest` (and point global `latest` at the last green **1.1.x** build)
 - `1.0` / `1.2` → `buildTag: null`
 
-**Current (fixed):** global `latest` = build **1.1.16+** on actor `E5JQI6n1Xle0Mn0G6`; deploy via `scripts/deploy_actor.sh`.
+**Current (fixed):** global `latest` = build **1.1.17+** on actor `E5JQI6n1Xle0Mn0G6`; deploy via `scripts/deploy_actor.sh`. Store notice `UNDER_MAINTENANCE` cleared after empty-input fix (2026-06-20).
+
+## Cleanup inventory (2026-06-20)
+
+| Actor | ID | Action |
+|-------|-----|--------|
+| **Canonical (keep)** | `E5JQI6n1Xle0Mn0G6` | Store listing, `latest` = 1.1.17 |
+| Duplicate test actor | `bFE97i9cy2KEvzccK` | **Deleted** (private, all builds failed) |
+| Old worker archive | `jOcx8jK2FdhZhoKrE` | Deprecated; remove monetization in Console before delete/unpublish (Apify API 403 otherwise) |
+
+Run tests before deploy: `bash scripts/run_all_tests.sh`
 
 ## Store README (Console + public listing)
 
@@ -115,4 +125,6 @@ Repo: `https://github.com/LareLabs/refinery-html-to-llm-cleaner` (`main`).
 
 - **Deploy code:** `bash scripts/deploy_actor.sh` (not git webhook — auto-build disabled; git-clone path still fails on Apify).
 - **README / Console only:** `sync_store_readme.py`, `sync_console_source.py`.
-- Post-mortem: `/root/TOOLS/postmortems/2026-06-16-refinery-apify-build-worker-migration.md`
+- Post-mortems:
+  - `/root/TOOLS/postmortems/2026-06-20-refinery-apify-qa-empty-input-fix.md` (QA empty-input fix)
+  - `/root/TOOLS/postmortems/2026-06-16-refinery-apify-build-worker-migration.md` (worker migration)
