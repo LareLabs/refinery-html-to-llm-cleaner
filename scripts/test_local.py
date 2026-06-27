@@ -93,7 +93,7 @@ class SchemaTests(unittest.TestCase):
         self.assertTrue(body["urls"], "exampleRunInput should include a working demo URL")
 
     def test_apify_prefill_simulation(self):
-        """Apify QA uses schema prefills — both empty means no HTML."""
+        """Apify QA may use schema prefills — empty or example.com URL should not crash."""
         schema = json.loads((ROOT / "INPUT_SCHEMA.json").read_text(encoding="utf-8"))
         simulated = {
             "urls": schema["properties"]["urls"].get("prefill", []),
@@ -102,8 +102,8 @@ class SchemaTests(unittest.TestCase):
             "removeStyles": schema["properties"]["removeStyles"].get("default", True),
             "includeMetadata": schema["properties"]["includeMetadata"].get("default", True),
         }
-        self.assertFalse(simulated["urls"])
-        self.assertFalse(str(simulated["raw_payload"]).strip())
+        has_html = bool(simulated["urls"]) or bool(str(simulated["raw_payload"]).strip())
+        self.assertTrue(has_html, "Try actor prefill should include example.com or paste demo")
 
 
 class ActorInputTests(unittest.IsolatedAsyncioTestCase):
@@ -145,6 +145,12 @@ class ActorInputTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(rows), 1)
         self.assertTrue(rows[0]["success"])
         self.assertIn("Unit test", rows[0]["text"])
+
+    async def test_oversized_payload_graceful(self):
+        rows = await run_actor({"raw_payload": "x" * (10 * 1024 * 1024 + 1), "urls": []})
+        self.assertEqual(len(rows), 1)
+        self.assertFalse(rows[0]["success"])
+        self.assertIn("too large", rows[0]["error"])
 
     async def test_urls_win_over_paste(self):
         html = "<html><body><p>paste</p></body></html>"

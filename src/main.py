@@ -71,8 +71,16 @@ async def main():
         
         # Validate payload size (10MB limit)
         if len(html) > 10 * 1024 * 1024:
-            Actor.log.error('Payload too large (max 10MB)')
-            raise ValueError('Payload too large (max 10MB)')
+            msg = 'Payload too large (max 10MB)'
+            Actor.log.warning(msg)
+            await Actor.push_data({
+                'success': False,
+                'error': msg,
+                'text': '',
+                'word_count': 0,
+                'content_type': 'web',
+            })
+            return
         
         Actor.log.info(f'Processing HTML payload ({len(html)} bytes)')
         
@@ -124,9 +132,16 @@ async def main():
             Actor.log.info('Output pushed successfully')
             
         except Exception as e:
-            Actor.log.error(f'Extraction failed: {str(e)}')
+            msg = f'Extraction failed: {str(e)}'
+            Actor.log.error(msg)
             Actor.log.error(f'Exception type: {type(e).__name__}')
-            raise
+            await Actor.push_data({
+                'success': False,
+                'error': msg,
+                'text': '',
+                'word_count': 0,
+                'content_type': 'web',
+            })
 
 if __name__ == '__main__':
     asyncio.run(main())

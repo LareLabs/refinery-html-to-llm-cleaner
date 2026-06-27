@@ -8,9 +8,9 @@
   "seoTitle": "RAG HTML Cleaner \u2014 Reduce LLM Tokens | Apify Actor",
   "seoDescription": "HTML to LLM text cleaner for RAG pipelines. Strip scripts and layout noise, cut embedding tokens. BeautifulSoup & Firecrawl post-process. $0.002/page.",
   "categories": [
-    "WEB_SCRAPING",
-    "DATA_EXTRACTION",
-    "DEVELOPER_TOOLS"
+    "AI",
+    "DEVELOPER_TOOLS",
+    "AGENTS"
   ],
   "tags": [
     "web-scraping",

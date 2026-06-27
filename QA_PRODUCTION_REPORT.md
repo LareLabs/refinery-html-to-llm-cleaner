@@ -1,4 +1,4 @@
-# Refinery production QA — 2026-06-20
+# Refinery production QA — 2026-06-28
 
 ## Summary
 
@@ -9,10 +9,12 @@
 | Paste minimal smoke | **PASS** |
 | Paste Lipstick Wayback (~25KB) | **PASS** — word_count 208 |
 | Live `lipstickalley.com` URL | **PASS** — SUCCEEDED, graceful `success: false` (Cloudflare block) |
-| Local unit tests (`scripts/test_local.py`) | **PASS** — 9/9 |
+| Oversized payload (>10MB) | **PASS** — graceful error, no crash |
+| Local unit tests (`scripts/test_local.py`) | **PASS** — 10/10 |
 | Import validation | **PASS** |
-| Docker deploy | **PASS** — build **1.1.17** |
-| Store notice | **PASS** — `UNDER_MAINTENANCE` cleared |
+| Docker deploy | **PASS** — build **1.1.18** |
+| Store notice | **PASS** — `NONE` |
+| Try-actor prefill | **PASS** — `example.com` URL prefill synced |
 
 ## Run full suite
 

@@ -18,11 +18,12 @@ PREFILL_ASSET = ROOT / "assets" / "prefill-lipstickalley-wayback.html"
 
 def console_input_schema() -> str:
     schema = json.loads((ROOT / "INPUT_SCHEMA.json").read_text(encoding="utf-8"))
+    schema["properties"]["urls"]["prefill"] = ["https://example.com"]
     if PREFILL_ASSET.is_file():
         schema["properties"]["raw_payload"]["prefill"] = PREFILL_ASSET.read_text(encoding="utf-8")
         schema["properties"]["raw_payload"]["description"] = (
             "Paste raw HTML from your crawler. Prefilled: Wayback snapshot of lipstickalley.com "
-            "— run as-is to see heavy-HTML cleanup."
+            "— switch to paste mode and run as-is to see heavy-HTML cleanup."
         )
     return json.dumps(schema, indent=2, ensure_ascii=False) + "\n"
 
@@ -32,7 +33,7 @@ def console_actor_json() -> str:
     prefill = PREFILL_ASSET.read_text(encoding="utf-8") if PREFILL_ASSET.is_file() else ""
     body = json.dumps(
         {
-            "urls": [],
+            "urls": ["https://example.com"],
             "raw_payload": prefill,
             "removeScripts": True,
             "removeStyles": True,

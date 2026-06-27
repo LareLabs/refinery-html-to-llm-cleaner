@@ -124,6 +124,7 @@ python3 scripts/sync_store_readme.py
 Repo: `https://github.com/LareLabs/refinery-html-to-llm-cleaner` (`main`).
 
 - **Deploy code:** `bash scripts/deploy_actor.sh` (not git webhook — auto-build disabled; git-clone path still fails on Apify).
+- **Sync metadata only:** `python3 scripts/sync_actor_metadata.py` (title, seoTitle, seoDescription, categories)
 - **README / Console only:** `sync_store_readme.py`, `sync_console_source.py`.
 - Post-mortems:
   - `/root/TOOLS/postmortems/2026-06-20-refinery-apify-qa-empty-input-fix.md` (QA empty-input fix)
