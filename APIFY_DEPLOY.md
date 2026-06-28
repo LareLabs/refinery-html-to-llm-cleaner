@@ -152,8 +152,19 @@ bash scripts/run_all_tests.sh
 | Store tags | ⬜ Console only | Publication → Store listing → Tags (API rejects `tags`) |
 | Limited permissions | ⬜ Console only | Settings → enable least-privilege if offered |
 | Reviews / bookmarks | ⬜ 0 | Grows with real users |
+| Store Task (one-click demo) | ✅ | `refinery-clean-example-url` → https://console.apify.com/organization/vTZ0XDFG4cZCNAdQl/actor-tasks/6179DcT8CK5oOmSnX |
+| Agentic discovery (`allowsAgenticUsers`) | ⬜ | Requires PPE active + limited permissions — not in agentic store index yet |
+| Glama (`glama.json`) | 🟡 | Added to repo; submit at https://glama.ai/mcp/servers |
+| mcp.so directory | ⬜ | API submit rejected (`invalid type`); use GitHub issue on chatmcp/mcpso |
 
 **Revenue paths:** Apify Store runs ($0.002/page) · MCP → npm → Apify credits · agent discovery via MCP Registry + Apify MCP `search-actors`.
+
+### Console-only (you, ~5 min)
+
+1. **Publication → Monetization** — activate PPE now (not July 1 schedule). Event: `html-extraction` @ $0.002.
+2. **Publication → Store listing → Tags** — `rag`, `html-cleaner`, `beautifulsoup-alternative`, `llm`, `firecrawl`
+3. **Settings → Permissions** — enable limited permissions (unlocks agentic store discovery)
+4. **Old actor cleanup** (`jOcx8jK2FdhZhoKrE`) — remove monetization in Console, then unpublish/delete (API blocks while PPE active; FREE pricing needs 2-week `startedAt`)
 
 - Post-mortems:
   - `/root/TOOLS/postmortems/2026-06-20-refinery-apify-qa-empty-input-fix.md` (QA empty-input fix)
