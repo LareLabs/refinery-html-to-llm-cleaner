@@ -180,9 +180,51 @@ bash scripts/run_all_tests.sh
 
 **Not a store field:** `tags` in `.actor/actor.json` is local metadata only — Apify API has no store `tags` field (only `categories` and build `taggedBuilds` like `latest`).
 
-### Optional cleanup (later)
+### Post–Jul 1 verification (agent or you)
 
-- **Old actor** (`jOcx8jK2FdhZhoKrE` / `archived-00307`) — FREE pricing scheduled 2026-07-13, then unpublish/delete in Console.
+After PPE goes live (`2026-07-01T01:32:39Z`), confirm:
+
+```bash
+cd /root/ACTIVE_PROJECTS/refinery/refinery-rust
+bash scripts/run_all_tests.sh
+python3 -c "
+import json, urllib.request
+from pathlib import Path
+t = json.loads(Path('/root/.apify/auth.json').read_text())['token']
+req = urllib.request.Request(
+  'https://api.apify.com/v2/store?search=refinery-html-to-llm-cleaner&allowsAgenticUsers=true',
+  headers={'Authorization': f'Bearer {t}'})
+n = len(json.loads(urllib.request.urlopen(req, timeout=30).read())['data']['items'])
+print('agentic-eligible:', n > 0)
+"
+```
+
+Expect: store `currentPricingInfo` = `PAY_PER_EVENT`, agentic search returns the actor, run logs show successful `html-extraction` charges.
+
+### Optional Console boost (Examples tab + SEO)
+
+Publish the saved task so it appears on the Actor **Examples** tab ([publish-task docs](https://docs.apify.com/platform/actors/publishing/publish-task)):
+
+1. Open [refinery-clean-example-url task](https://console.apify.com/organization/vTZ0XDFG4cZCNAdQl/actor-tasks/6179DcT8CK5oOmSnX)
+2. **Publication** tab → complete Display information → **Publish task**
+
+Creates a public example page and helps Store/AI discovery. No API endpoint for this.
+
+### Runtime defaults (API-synced)
+
+- `maxTotalChargeUsd` raised from **$0.01 → $5** (was blocking bulk URL runs for paying users)
+- `defaultRunOptions`: build `latest`, 512 MB, 3600s timeout
+
+### Realistic expectations (honest)
+
+**Technically ready:** build 1.1.19, last 20 runs 20/20 pass, Publication complete, MCP/npm/registry live, limited permissions on.
+
+**Why user count is still ~2:** almost all 112 runs are org self-QA; PPE was not charging; agentic discovery waits until Jul 1; niche SEO queries have low volume; Refinery is a **post-scrape pipeline** (users find Firecrawl/BS4 first, not HTML cleaners).
+
+**Not a total failure** — it's an **unmonetized, undistributed utility** with solid infra. Jul 1 turns on revenue + agentic indexing. Meaningful user growth still needs **outbound distribution** (integrations, content, dev communities) — Store alone rarely floods pipeline tools with traffic.
+
+**Jul 13:** deprecated actor (`archived-00307`) goes FREE → unpublish in Console to stop duplicate-store confusion.
+
 
 - Post-mortems:
   - `/root/TOOLS/postmortems/2026-06-20-refinery-apify-qa-empty-input-fix.md` (QA empty-input fix)
