@@ -144,7 +144,8 @@ bash scripts/run_all_tests.sh
 | README images (Imgur → apifyusercontent) | ✅ | `embed_store_readme.py` + `sync_store_readme.py` |
 | Try-actor `exampleRunInput` | ✅ | Must be real demo JSON — **not** placeholder `helloWorld` |
 | INPUT + OUTPUT schema on version | ✅ | `sync_console_source.py` |
-| Pay-per-event pricing ($0.002/page) | ✅ | Console → Monetization |
+| Pay-per-event pricing ($0.002/page) | 🟡 scheduled | Console → Publication → Monetization — **must be active** (not just configured). Log: `Ignored attempt to charge... does not use pay-per-event` = PPE not live yet. |
+| `Actor.charge('html-extraction')` in code | ✅ build 1.1.19+ | Required for custom PPE events; deployed |
 | Automated QA (empty input) | ✅ | Graceful `success: false`, run SUCCEEDS |
 | MCP Registry (`io.github.LareLabs/refinery-mcp`) | ✅ | npm + `mcp-publisher-official publish` |
 | 30d success rate ≥95% | 🟡 ~58% | Old failures roll off; new runs all pass |
