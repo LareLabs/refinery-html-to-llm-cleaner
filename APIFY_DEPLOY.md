@@ -124,8 +124,36 @@ python3 scripts/sync_store_readme.py
 Repo: `https://github.com/LareLabs/refinery-html-to-llm-cleaner` (`main`).
 
 - **Deploy code:** `bash scripts/deploy_actor.sh` (not git webhook — auto-build disabled; git-clone path still fails on Apify).
-- **Sync metadata only:** `python3 scripts/sync_actor_metadata.py` (title, seoTitle, seoDescription, categories)
+- **Sync listing (no rebuild):** `bash scripts/sync_all_listing.sh` — README, INPUT/OUTPUT schema, exampleRunInput, SEO fields.
+- **Sync metadata only:** `python3 scripts/sync_actor_metadata.py` (title, seoTitle, seoDescription, categories, exampleRunInput)
 - **README / Console only:** `sync_store_readme.py`, `sync_console_source.py`.
+
+## Monetization & quality score checklist
+
+Quality score is Console-only (no public API). Run after listing changes:
+
+```bash
+bash scripts/sync_all_listing.sh
+bash scripts/run_all_tests.sh
+```
+
+| Signal | Status | Action if missing |
+|--------|--------|-------------------|
+| Store SEO (#1 on target queries) | ✅ | Re-run `sync_all_listing.sh` after README edits |
+| `seoTitle` / `seoDescription` | ✅ | `sync_actor_metadata.py` |
+| README images (Imgur → apifyusercontent) | ✅ | `embed_store_readme.py` + `sync_store_readme.py` |
+| Try-actor `exampleRunInput` | ✅ | Must be real demo JSON — **not** placeholder `helloWorld` |
+| INPUT + OUTPUT schema on version | ✅ | `sync_console_source.py` |
+| Pay-per-event pricing ($0.002/page) | ✅ | Console → Monetization |
+| Automated QA (empty input) | ✅ | Graceful `success: false`, run SUCCEEDS |
+| MCP Registry (`io.github.LareLabs/refinery-mcp`) | ✅ | npm + `mcp-publisher-official publish` |
+| 30d success rate ≥95% | 🟡 ~58% | Old failures roll off; new runs all pass |
+| Store tags | ⬜ Console only | Publication → Store listing → Tags (API rejects `tags`) |
+| Limited permissions | ⬜ Console only | Settings → enable least-privilege if offered |
+| Reviews / bookmarks | ⬜ 0 | Grows with real users |
+
+**Revenue paths:** Apify Store runs ($0.002/page) · MCP → npm → Apify credits · agent discovery via MCP Registry + Apify MCP `search-actors`.
+
 - Post-mortems:
   - `/root/TOOLS/postmortems/2026-06-20-refinery-apify-qa-empty-input-fix.md` (QA empty-input fix)
   - `/root/TOOLS/postmortems/2026-06-16-refinery-apify-build-worker-migration.md` (worker migration)

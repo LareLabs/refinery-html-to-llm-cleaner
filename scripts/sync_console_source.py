@@ -52,6 +52,7 @@ def main() -> int:
     token = json.loads(AUTH_PATH.read_text())["token"]
     source_files = [
         {"name": "INPUT_SCHEMA.json", "format": "TEXT", "content": console_input_schema()},
+        {"name": "OUTPUT_SCHEMA.json", "format": "TEXT", "content": (ROOT / "OUTPUT_SCHEMA.json").read_text(encoding="utf-8")},
         {"name": ".actor/actor.json", "format": "TEXT", "content": console_actor_json()},
     ]
     for item in source_files:

@@ -86,10 +86,6 @@ Your crawler → raw HTML → Refinery → clean text → chunk → embed → ve
 }
 ```
 
-### Demo 1b — Heavy forum HTML (Console prefill)
-
-**Try actor** opens with a **Wayback snapshot** of [lipstickalley.com](https://www.lipstickalley.com/) (~120KB XenForo HTML). Live URL fetch is blocked by Cloudflare — paste mode shows Refinery on real forum bloat. Expect ~600KB archived page → ~28KB clean text when using the full snapshot in `assets/prefill-lipstickalley-wayback.html`.
-
 ### Demo 2 — Bloated news homepage
 
 ```json

@@ -23,6 +23,7 @@ def main() -> int:
         "seoTitle": actor.get("seoTitle"),
         "seoDescription": actor.get("seoDescription"),
         "categories": actor.get("categories", []),
+        "exampleRunInput": actor.get("exampleRunInput"),
     }
     token = json.loads(AUTH_PATH.read_text())["token"]
     req = urllib.request.Request(
@@ -44,6 +45,9 @@ def main() -> int:
     print(f"Synced actor metadata for {ACTOR_ID}")
     print(f"  title: {data.get('title')}")
     print(f"  seoTitle: {data.get('seoTitle')}")
+    eri = data.get("exampleRunInput", {})
+    preview = (eri.get("body") or "")[:80]
+    print(f"  exampleRunInput: {preview}...")
     return 0
 
 
