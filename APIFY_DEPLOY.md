@@ -1,5 +1,7 @@
 # Apify deploy — Lare Labs org only
 
+**Wait state (Jun 2026):** See [`REFINERY_WAIT_STATE.md`](./REFINERY_WAIT_STATE.md) — engineering complete; PPE live Jul 1; no action until first sale or verification.
+
 **Do not deploy to Cameron's personal Apify account.** Wrong account = duplicate actors, failed builds, hours of debugging.
 
 ## Verify before every `apify push`
