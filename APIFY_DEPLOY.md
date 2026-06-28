@@ -130,7 +130,16 @@ Repo: `https://github.com/LareLabs/refinery-html-to-llm-cleaner` (`main`).
 
 ## Monetization & quality score checklist
 
-Quality score is Console-only (no public API). Run after listing changes:
+Per [Apify publish docs](https://docs.apify.com/platform/actors/publishing/publish) and [monetize docs](https://docs.apify.com/platform/actors/publishing/monetize):
+
+- **Store listing metadata** = **Publication → Display information** (icon, name, description, **Categories**, custom SEO). There is **no separate “Tags” field** on the Publication page.
+- **Categories** are the store taxonomy (`AI`, `DEVELOPER_TOOLS`, `AGENTS`, etc.) — syncable via API (`categories` on `PUT /v2/acts/{id}`).
+- **Search keywords** (rag, html-cleaner, …) come from **description**, **seoTitle**, **seoDescription**, and **README** — not a tags picker.
+- **Major monetization changes** (new PPE events, price increases, model changes) require a **14-day notice** per Apify policy — cannot be activated immediately via API or Console.
+- **Agentic payments** (`allowsAgenticUsers=true`) are **automatic** when: pay-per-event is **live**, limited permissions, no Standby. No separate opt-in. See [monetize → agentic payments](https://docs.apify.com/platform/actors/publishing/monetize).
+- **Quality score** = **Console → Insights → Actor quality** (no public API).
+
+Run after listing changes:
 
 ```bash
 bash scripts/sync_all_listing.sh
@@ -141,30 +150,39 @@ bash scripts/run_all_tests.sh
 |--------|--------|-------------------|
 | Store SEO (#1 on target queries) | ✅ | Re-run `sync_all_listing.sh` after README edits |
 | `seoTitle` / `seoDescription` | ✅ | `sync_actor_metadata.py` |
+| **Categories** (AI, Developer tools, Agents) | ✅ | `sync_actor_metadata.py` or Publication → Display information |
 | README images (Imgur → apifyusercontent) | ✅ | `embed_store_readme.py` + `sync_store_readme.py` |
 | Try-actor `exampleRunInput` | ✅ | Must be real demo JSON — **not** placeholder `helloWorld` |
 | INPUT + OUTPUT schema on version | ✅ | `sync_console_source.py` |
-| Pay-per-event pricing ($0.002/page) | 🟡 scheduled | Console → Publication → Monetization — **must be active** (not just configured). Log: `Ignored attempt to charge... does not use pay-per-event` = PPE not live yet. |
+| Pay-per-event pricing ($0.002/page) | 🟡 scheduled Jul 1 | **14-day notice required** when PPE was first added. Goes live on schedule; `Actor.charge()` logs “does not use pay-per-event” until then. |
 | `Actor.charge('html-extraction')` in code | ✅ build 1.1.19+ | Required for custom PPE events; deployed |
 | Automated QA (empty input) | ✅ | Graceful `success: false`, run SUCCEEDS |
 | MCP Registry (`io.github.LareLabs/refinery-mcp`) | ✅ | npm + `mcp-publisher-official publish` |
 | 30d success rate ≥95% | 🟡 ~58% | Old failures roll off; new runs all pass |
-| Store tags | ⬜ Console only | Publication → Store listing → Tags (API rejects `tags`) |
-| Limited permissions | ⬜ Console only | Settings → enable least-privilege if offered |
+| **Limited permissions** | ✅ | `actorPermissionLevel: LIMITED_PERMISSIONS` (Publication → Actor permissions) |
+| **Agentic discovery** | ⬜ after Jul 1 | Store still shows `FREE` until PPE starts; then `allowsAgenticUsers` should flip automatically |
 | Reviews / bookmarks | ⬜ 0 | Grows with real users |
 | Store Task (one-click demo) | ✅ | `refinery-clean-example-url` → https://console.apify.com/organization/vTZ0XDFG4cZCNAdQl/actor-tasks/6179DcT8CK5oOmSnX |
-| Agentic discovery (`allowsAgenticUsers`) | ⬜ | Requires PPE active + limited permissions — not in agentic store index yet |
-| Glama (`glama.json`) | 🟡 | Added to repo; submit at https://glama.ai/mcp/servers |
-| mcp.so directory | ⬜ | API submit rejected (`invalid type`); use GitHub issue on chatmcp/mcpso |
+| Glama (`glama.json`) | 🟡 | In repo; submit at https://glama.ai/mcp/servers |
+| mcp.so directory | 🟡 | Issue https://github.com/chatmcp/mcpso/issues/2933 |
 
-**Revenue paths:** Apify Store runs ($0.002/page) · MCP → npm → Apify credits · agent discovery via MCP Registry + Apify MCP `search-actors`.
+**Revenue paths:** Apify Store PPE runs ($0.002/page from Jul 1) · MCP → npm → Apify credits · agent discovery via MCP Registry + Apify MCP `search-actors` (quality score affects ranking).
 
-### Console-only (you, ~5 min)
+### What API/CLI can vs cannot do
 
-1. **Publication → Monetization** — activate PPE now (not July 1 schedule). Event: `html-extraction` @ $0.002.
-2. **Publication → Store listing → Tags** — `rag`, `html-cleaner`, `beautifulsoup-alternative`, `llm`, `firecrawl`
-3. **Settings → Permissions** — enable limited permissions (unlocks agentic store discovery)
-4. **Old actor cleanup** (`jOcx8jK2FdhZhoKrE`) — remove monetization in Console, then unpublish/delete (API blocks while PPE active; FREE pricing needs 2-week `startedAt`)
+| Via `PUT /v2/acts/{id}` + scripts | Console-only |
+|-----------------------------------|--------------|
+| `title`, `description`, `seoTitle`, `seoDescription` | Initial PPE wizard (first setup) |
+| `categories` | Major pricing changes (14-day notice UI) |
+| `exampleRunInput`, README, INPUT/OUTPUT schema | Quality score dashboard |
+| `pricingInfos` append (14+ days out for major changes) | Payout approval |
+| Deploy, QA, tasks, runs | — |
+
+**Not a store field:** `tags` in `.actor/actor.json` is local metadata only — Apify API has no store `tags` field (only `categories` and build `taggedBuilds` like `latest`).
+
+### Optional cleanup (later)
+
+- **Old actor** (`jOcx8jK2FdhZhoKrE` / `archived-00307`) — FREE pricing scheduled 2026-07-13, then unpublish/delete in Console.
 
 - Post-mortems:
   - `/root/TOOLS/postmortems/2026-06-20-refinery-apify-qa-empty-input-fix.md` (QA empty-input fix)
