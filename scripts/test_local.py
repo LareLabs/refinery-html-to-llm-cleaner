@@ -47,6 +47,7 @@ async def run_actor(input_data: dict, *, fetch_side_effect=None) -> list[dict]:
     mock_actor.__aexit__ = AsyncMock(return_value=None)
     mock_actor.get_input = AsyncMock(return_value=input_data)
     mock_actor.push_data = AsyncMock(side_effect=lambda row: pushed.append(row))
+    mock_actor.charge = AsyncMock(return_value=MagicMock(event_charge_limit_reached=False))
     mock_actor.log = MagicMock()
 
     patches = [patch.object(main, "Actor", mock_actor)]
@@ -135,7 +136,7 @@ class ActorInputTests(unittest.IsolatedAsyncioTestCase):
         )
         self.assertEqual(len(rows), 1)
         self.assertFalse(rows[0]["success"])
-        self.assertIn("URL fetches failed", rows[0]["error"])
+        self.assertIn("Failed to fetch", rows[0]["error"])
 
     async def test_paste_mode_extracts(self):
         html = (
@@ -166,6 +167,7 @@ class ActorInputTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(rows), 1)
         self.assertTrue(rows[0]["success"])
         self.assertIn("fetched", rows[0]["text"])
+        self.assertEqual(rows[0].get("url"), "https://example.com")
 
 
 def main() -> int:
